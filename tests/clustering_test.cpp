@@ -16,7 +16,7 @@ TEST_CASE("Cluster class check", "[clustering]"){
     SECTION("getDistance returns distance between center and point"){
         Cluster<uint8_t, 3> c(img, 0, 0);
         c.setCenter(img(1, 1));
-        REQUIRE(c.getDistance(2, 0) == Approx(155.88).epsilon(0.01));
+        REQUIRE(c.getDistance(2, 0) == 24300);
     }
 
     SECTION("moveCenter changes center to average of added points values"){

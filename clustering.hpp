@@ -43,8 +43,12 @@ public:
             (*img)(pt[0], pt[1]) = center;
     }
 
-    double getDistance(int x, int y){
-        return norm(center, (*img)(x, y));
+    long getDistance(int row, int col){
+        long distance = 0;
+        Vec<T, cn>* r = img->template ptr<Vec<T, cn>>(row);
+        for(int i = 0; i < cn; ++i)
+            distance += (center[i] - r[col][i]) * (center[i] - r[col][i]);
+        return distance;
     }
 
 
@@ -72,17 +76,22 @@ vector<Cluster<T, cn>> getClusters(Mat_<Vec<T, cn>>& img, int count){
 
 template <typename T, int cn>
 void assignPoints(Mat_<Vec<T, cn>>& img, vector<Cluster<T, cn>>& clusters){
+    vector<long> distance(clusters.size());
     for(auto& c : clusters)
         c.resetPoints();
-    for(int col = 0; col < img.cols; ++col) {
-        for(int row = 0; row < img.rows; ++row) {
-            auto pt = img(row, col);
-            vector<double> distance(clusters.size());
+    for(int row = 0; row < img.rows; ++row) {
+        for(int col = 0; col < img.cols; ++col) {
             for(int c = 0; c < distance.size(); ++c)
                 distance[c] = clusters[c].getDistance(row, col);
-            int min_id[] = {0, 0};
-            minMaxIdx(distance, nullptr, nullptr, min_id);
-            clusters[min_id[1]].addPoint(row, col);
+            int min_id = 0;
+            long min_value = INT64_MAX;
+            for(int i = 0; i < distance.size(); ++i){
+                if(distance[i] < min_value){
+                    min_value = distance[i];
+                    min_id = i;
+                }
+            }
+            clusters[min_id].addPoint(row, col);
         }
     }
 }

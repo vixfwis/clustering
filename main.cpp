@@ -3,24 +3,29 @@
 #include <opencv2/imgcodecs.hpp>
 #include "clustering.hpp"
 
+//#define DEBUG
+#include "debug.h"
+
 int main() {
     srand(0);
-    auto m = imread("fox.jpg");
+    auto m = imread("fox.jpg", IMREAD_COLOR);
     Mat_<Vec3b> img(m);
     auto clusters = getClusters(img, 3);
-    for(auto& c : clusters)
-        cout << "Created cluster: " << c.getCenter() << endl;
-    cout << endl;
-    for(int i = 0; i < 5; ++i){
-        cout << "Assigning points" << endl;
+    for(auto& c : clusters) {
+        d("Created cluster:", c.getCenter());
+    }
+    d("");
+    for(int i = 0; i < 100; ++i){
+        d("Assigning points");
         assignPoints(img, clusters);
         for(auto& c : clusters) {
-            cout << "Cluster has " << c.getPoints().size() << " points" << endl;
+            d("Cluster has", c.getPoints().size(), "points");
             c.moveCenter();
-            cout << "New center is " << c.getCenter() << endl;
+            d("New center is", c.getCenter());
         }
-        cout << endl;
+        d("");
     }
+    d("Applying center colors to image");
     for(auto& c : clusters)
         c.applyCenter();
     imwrite("fox2.jpg", img);
