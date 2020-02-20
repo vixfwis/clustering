@@ -11,7 +11,7 @@ template<typename T, int cn>
 class Cluster{
     Mat_<Vec<T, cn>> *img;
     Vec<T, cn> center;
-    vector<Vec<T, 2>> points;
+    vector<Vec2i> points;
 
 public:
     Cluster(Mat_<Vec<T, cn>>& img, int x, int y){
@@ -21,7 +21,7 @@ public:
     virtual ~Cluster(){};
 
     void addPoint(int x, int y){
-        points.emplace_back(Vec<T, 2>(x, y));
+        points.emplace_back(Vec2i(x, y));
     }
 
     void resetPoints(){
@@ -57,7 +57,7 @@ public:
         center = pt;
     }
 
-    const vector<Vec<T, 2>> getPoints(){
+    const vector<Vec2i> getPoints(){
         return points;
     }
 };

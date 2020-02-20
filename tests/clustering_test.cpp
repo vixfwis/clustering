@@ -38,17 +38,17 @@ TEST_CASE("Cluster class check", "[clustering]"){
         assignPoints(img, v);
 
         auto c10pts = v[0].getPoints();
-        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec<uint8_t, 2>(0, 0)));
-        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec<uint8_t, 2>(0, 1)));
-        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec<uint8_t, 2>(0, 2)));
-        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec<uint8_t, 2>(1, 0)));
-        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec<uint8_t, 2>(1, 1)));
-        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec<uint8_t, 2>(1, 2)));
+        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec2i(0, 0)));
+        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec2i(0, 1)));
+        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec2i(0, 2)));
+        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec2i(1, 0)));
+        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec2i(1, 1)));
+        REQUIRE(std::count(c10pts.begin(), c10pts.end(), Vec2i(1, 2)));
 
         auto c100pts = v[1].getPoints();
-        REQUIRE(std::count(c100pts.begin(), c100pts.end(), Vec<uint8_t, 2>(2, 0)));
-        REQUIRE(std::count(c100pts.begin(), c100pts.end(), Vec<uint8_t, 2>(2, 1)));
-        REQUIRE(std::count(c100pts.begin(), c100pts.end(), Vec<uint8_t, 2>(2, 2)));
+        REQUIRE(std::count(c100pts.begin(), c100pts.end(), Vec2i(2, 0)));
+        REQUIRE(std::count(c100pts.begin(), c100pts.end(), Vec2i(2, 1)));
+        REQUIRE(std::count(c100pts.begin(), c100pts.end(), Vec2i(2, 2)));
     }
 
     SECTION("applyCenter changes every assigned point to value of the center"){
