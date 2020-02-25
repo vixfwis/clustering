@@ -70,7 +70,7 @@ template <typename T, int cn>
 vector<Cluster<T, cn>> getClusters(Mat_<Vec<T, cn>>& img, int count){
     vector<Cluster<T, cn>> out;
     for(int i = 0; i < count; ++i)
-        out.emplace_back(Cluster<T, cn>(img, random() % img.cols, random() % img.rows));
+        out.emplace_back(Cluster<T, cn>(img, random() % img.rows, random() % img.cols));
     return out;
 }
 
@@ -84,7 +84,7 @@ void assignPoints(Mat_<Vec<T, cn>>& img, vector<Cluster<T, cn>>& clusters){
             for(int c = 0; c < distance.size(); ++c)
                 distance[c] = clusters[c].getDistance(row, col);
             int min_id = 0;
-            long min_value = INT64_MAX;
+            int64_t min_value = INT64_MAX;
             for(int i = 0; i < distance.size(); ++i){
                 if(distance[i] < min_value){
                     min_value = distance[i];
